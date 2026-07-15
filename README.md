@@ -1,5 +1,7 @@
 # Fetal Oxygen Distribution Model
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21384344.svg)](https://doi.org/10.5281/zenodo.21384344)
+
 A computational framework for simulating fetal haemodynamics and oxygen distribution in healthy and transposition of the great arteries (TGA) configurations.
 
 The repository combines a closed-loop, zero-dimensional (0D) fetal cardiovascular model with an oxygen transport model. It can be used to investigate how fetal cardiovascular anatomy and physiological adaptations affect blood-flow distribution and oxygen delivery at approximately 36 weeks of gestation.
@@ -136,21 +138,10 @@ Then rerun the model or the manual compilation command.
 
 ## Citation
 
-A citation for the associated scientific publication should be added once it is available. Until then, the repository may be cited as:
+If you use this model or code, please cite:
+> Villanueva-Baxarias, I. (2026). Fetal Oxygen Distribution Model [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.21384344
 
-> Villanueva-Baxarias, I. (2026). *Fetal Oxygen Distribution Model* [Computer software]. GitHub. https://github.com/InmaV/O2_distribution_model
-
-BibTeX:
-
-```bibtex
-@software{villanueva_baxarias_oxygen_model_2026,
-  author  = {Villanueva-Baxarias, Inma},
-  title   = {Fetal Oxygen Distribution Model},
-  year    = {2026},
-  url     = {https://github.com/InmaV/O2_distribution_model},
-  note    = {Computer software}
-}
-```
+A citation for the associated scientific publication should be added once it is available. 
 
 The methodological framework is also described in:
 
