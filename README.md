@@ -31,20 +31,20 @@ The repository combines a closed-loop, zero-dimensional (0D) fetal cardiovascula
 
 | File or directory             | Description                                                                                    |
 | ----------------------------- | ---------------------------------------------------------------------------------------------- |
-| `Healthy_O2_simulation.ipynb` | Runs and analyses the healthy fetal haemodynamic and oxygen-distribution model.                |
+| `Healthy_O2_simulation.ipynb` | Runs and analyses the healthy fetal hemodynamic and oxygen-distribution model.                |
 | `TGA_O2_simulations.ipynb`    | Runs and analyses oxygen-distribution scenarios for fetal TGA.                                 |
-| `TGA_flow_simulation.py`      | Performs the haemodynamic parameter sweep used to generate TGA flow inputs.                    |
+| `TGA_flow_simulation.py`      | Performs the hemodynamic parameter sweep used to generate TGA flow inputs.                    |
 | `Read_results_npz.ipynb`      | Reads, explores, and visualises saved `.npz` simulation results.                               |
-| `default_constants.npz`       | Baseline model constants used when modifying physiological parameters.                         |
+| `default_constants.npz`       | Reference model constants used when modifying physiological parameters.                         |
 | `functions_to_import.py`      | Helper functions for parameter scaling, signal processing, plotting, and result analysis.      |
 | `Hemodynamic model/`          | CellML models and generated C implementations of the healthy and TGA fetal circulation.        |
-| `Oxygen distribution model/`  | CellML models and compiled libraries for the healthy and TGA oxygen-distribution models.       |
+| `Oxygen distribution model/`  | CellML models, generated C implementations, and compiled libraries for the healthy and TGA oxygen-distribution models.       |
 | `solver/`                     | Python, Cython, and C interface used to compile and solve the generated cardiovascular models. |
 | `LICENSE`                     | GNU General Public License v3.0.                                                               |
 
 ## Model overview
 
-The haemodynamic component represents the fetal circulation as a network of lumped cardiovascular compartments. The generated C models are wrapped using Cython and solved with the CVode integrator provided by Assimulo.
+The hemodynamic component represents the fetal circulation as a network of lumped cardiovascular compartments. The generated C models are wrapped using Cython and solved with the CVode integrator provided by Assimulo.
 
 The oxygen-distribution component combines the simulated blood-flow distribution with oxygen transport calculations. It accounts for oxygen exchange at the placenta, oxygen consumption in fetal tissues, mixing between vascular compartments, and preferential streaming through the fetal shunts.
 
@@ -77,101 +77,7 @@ The repository contains a precompiled Cython extension for Python 3.9 on macOS. 
 
 Assimulo is most reliably installed through `conda-forge`.
 
-## Installation
 
-Clone the repository:
-
-```bash
-git clone https://github.com/InmaV/O2_distribution_model.git
-cd O2_distribution_model
-```
-
-Create and activate a Conda environment:
-
-```bash
-conda create -n fetal-o2 -c conda-forge \
-    python=3.9 numpy scipy matplotlib jupyterlab cython setuptools assimulo
-
-conda activate fetal-o2
-```
-
-A working C compiler is required because the generated model code is compiled through Cython.
-
-On macOS, the compiler can be installed with:
-
-```bash
-xcode-select --install
-```
-
-On Debian or Ubuntu:
-
-```bash
-sudo apt-get install build-essential
-```
-
-## Running the models
-
-### Healthy fetal simulation
-
-Start JupyterLab from the repository root:
-
-```bash
-jupyter lab
-```
-
-Open and run:
-
-```text
-Healthy_O2_simulation.ipynb
-```
-
-This notebook provides the reference healthy haemodynamic and oxygen-distribution simulation.
-
-### TGA oxygen-distribution simulations
-
-Open and run:
-
-```text
-TGA_O2_simulations.ipynb
-```
-
-The notebook evaluates oxygen distribution under TGA and the associated cardiovascular adaptations.
-
-### Generate TGA haemodynamic inputs
-
-The batch script performs a parameter sweep and saves complete haemodynamic results and flow summaries.
-
-First, create the output directories:
-
-```bash
-mkdir -p Results_TGA_100 Flow_TGA_100
-```
-
-Then run:
-
-```bash
-python TGA_flow_simulation.py
-```
-
-The current script evaluates 216 combinations of FO, DV-streaming, and cerebral-vascular settings, with corresponding DA, lung, and ventricular adaptations. Consequently, execution may require substantial computation time.
-
-### Important path note
-
-`TGA_flow_simulation.py` currently initialises the model using:
-
-```python
-solver.model.ModelSolver("FETAL_MODEL_36_TGA_FO2.c")
-```
-
-With the present repository structure, change this to:
-
-```python
-solver.model.ModelSolver(
-    "Hemodynamic model/FETAL_MODEL_36_TGA_FO2.c"
-)
-```
-
-Alternatively, make the generated C file available in the working directory before running the script.
 
 ## Output files
 
@@ -245,6 +151,10 @@ BibTeX:
   note    = {Computer software}
 }
 ```
+
+The methodological framework is also described in:
+
+> Villanueva Baxarias, M. I. **Advancing the understanding of congenital heart diseases through computational modeling of the fetal cardiovascular system.** PhD thesis, Universitat Pompeu Fabra, 2026.
 
 ## License
 
